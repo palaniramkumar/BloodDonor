@@ -1,7 +1,8 @@
 package com.freshmanapp.blooddonor;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
 import it.neokree.materialnavigationdrawer.elements.MaterialSection;
+import com.freshmanapp.blooddonor.util.AccountUtils;
 
 
 public class MyNavigationDrawer extends MaterialNavigationDrawer {
@@ -16,21 +18,30 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
     MaterialSection target;
     @Override
     public void init(Bundle savedInstanceState) {
-        account = new MaterialAccount(this.getResources(),"NeoKree","neokree@gmail.com",R.drawable.photo, R.drawable.bamboo);
+        AccountUtils.UserProfile profile  =  AccountUtils.getUserProfile(MyNavigationDrawer.this);
+        Bitmap bitmap = null;
+
+        /* getting user image */
+        try {
+
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), profile.possiblePhoto());
+        }
+        catch (Exception e){}
+
+        account = new MaterialAccount(this.getResources(),profile.possibleNames().get(0) ,profile.possibleEmails().get(0),bitmap, R.drawable.bamboo);
         this.addAccount(account);
 
-        MaterialAccount account2 = new MaterialAccount(this.getResources(),"Hatsune Miky","hatsune.miku@example.com",R.drawable.photo2,R.drawable.mat2);
+       /* MaterialAccount account2 = new MaterialAccount(this.getResources(),"Hatsune Miky","hatsune.miku@example.com",bitmap,R.drawable.mat2);
         this.addAccount(account2);
 
-        MaterialAccount account3 = new MaterialAccount(this.getResources(),"Example","example@example.com",R.drawable.photo,R.drawable.mat3);
+        MaterialAccount account3 = new MaterialAccount(this.getResources(),"Example","example@example.com",bitmap,R.drawable.mat3);
         this.addAccount(account3);
-
+*/
         // create sections
-        this.addSection(newSection("Section 1", new TestFragment()));
-        this.addSection(newSection("Section 2",new FragmentList()));
-        target = newSection("Section 3", R.drawable.ic_mic_white_24dp,new TestFragment()).setSectionColor(Color.parseColor("#9c27b0"));
+        target = newSection("Summary", R.drawable.ic_mic_white_24dp,new TestFragment()).setSectionColor(Color.parseColor("#9c27b0"));
         this.addSection(target);
-        this.addSection(newSection("Section",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#03a9f4")));
+        this.addSection(newSection("Friends", R.drawable.ic_hotel_grey600_24dp, new FriendsList()).setSectionColor(Color.parseColor("#03a9f4")));
+        this.addSection(newSection("Preferences",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#0689e4")));
 
         enableToolbarElevation();
 
@@ -57,11 +68,6 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         }
     });
 
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_navigation_drawer);
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

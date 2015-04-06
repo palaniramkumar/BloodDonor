@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Blood Donor</string>
-    <string name="title_activity_my_navigation_drawer">MyNavigationDrawer</string>
+    <string name="title_activity_my_navigation_drawer">Donor\'s Club</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
