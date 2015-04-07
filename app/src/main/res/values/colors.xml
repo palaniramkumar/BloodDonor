@@ -7,4 +7,7 @@
     <color name="list_row_end_color">#ffffff</color>
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
+    <color name="abc_secondary_text_material_dark">@android:color/darker_gray</color>
+    <color name="hint_foreground_dark">@android:color/darker_gray</color>
+
 </resources>

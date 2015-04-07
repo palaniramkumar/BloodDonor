@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name=".controller.AppController"
         android:allowBackup="true"
@@ -14,6 +16,10 @@
         <activity
             android:theme="@style/MyNavigationDrawerTheme"
             android:name=".MyNavigationDrawer"
+            android:label="@string/title_activity_my_navigation_drawer" />
+        <activity
+            android:theme="@style/MyNavigationDrawerTheme"
+            android:name=".Registration"
             android:label="@string/title_activity_my_navigation_drawer" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
