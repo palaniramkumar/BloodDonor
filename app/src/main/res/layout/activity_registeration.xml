@@ -57,7 +57,17 @@
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
-
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.60"
+                android:orientation="horizontal"
+                 >
             <com.rey.material.widget.EditText
                 style="@style/Material.Widget.EditText.Light"
                 android:id="@+id/txt_phno"
@@ -65,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="#FF000000"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textAppearance="@style/CodeFont"
                 android:hint="Mobile No"
                 android:digits="0123456789"
                 android:inputType="numberDecimal"
@@ -75,8 +85,35 @@
                 app:et_supportMaxChars="10"
                 app:et_supportTextErrorColor="#FFFF0000"
                 android:padding="8dp"
+                android:layout_gravity="top|left"
                 app:et_dividerErrorColor="#FFFF0000" />
-
+</FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.40"
+                    android:orientation="horizontal"
+                    android:id="@+id/bottomHalf" >
+            <com.rey.material.widget.EditText
+                style="@style/Material.Widget.EditText.Light"
+                android:id="@+id/txt_dob"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#FF000000"
+                android:textAppearance="@style/CodeFont"
+                android:inputType="text"
+                android:hint="Date of Birth"
+                app:et_inputId="@+id/txt_dob_input"
+                android:textColorLink="@android:color/holo_red_light"
+                app:et_supportMode="charCounter"
+                app:et_supportMaxChars="11"
+                app:et_supportTextErrorColor="#FFFF0000"
+                android:padding="8dp"
+                android:layout_gravity="top|right"
+                app:et_dividerErrorColor="#FFFF0000" />
+            </FrameLayout>
+                </LinearLayout>
             <com.rey.material.widget.EditText
                 style="@style/Material.Widget.EditText.Light"
                 android:id="@+id/txt_address"
@@ -91,23 +128,6 @@
                 app:et_supportMode="none" />
 
 
-            <com.rey.material.widget.EditText
-                style="@style/Material.Widget.EditText.Light"
-                android:id="@+id/txt_dob"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="#FF000000"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                android:inputType="text"
-                android:hint="Date of Birth"
-                app:et_inputId="@+id/txt_dob_input"
-                android:textColorLink="@android:color/holo_red_light"
-                app:et_supportMode="charCounter"
-                app:et_supportMaxChars="11"
-                app:et_supportTextErrorColor="#FFFF0000"
-                android:padding="8dp"
-                app:et_dividerErrorColor="#FFFF0000" />
 
             <com.rey.material.widget.EditText
                 style="@style/Material.Widget.EditText.Light"
@@ -116,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="#FF000000"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                android:textAppearance="@style/CodeFont"
                 android:digits="0123456789"
                 android:inputType="numberDecimal"
                 android:hint="Weight (in KG)"
@@ -147,8 +167,13 @@
             <com.rey.material.widget.Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="BUTTON"
+                android:id="@+id/btn_register"
+                android:textColor="@android:color/white"
+                android:background="@color/common_signin_btn_default_background"
+                android:text="Signup"
                 app:rd_enable="true"/>
+
+
 
         </LinearLayout>
     </ScrollView>
