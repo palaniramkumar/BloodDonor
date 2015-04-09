@@ -6,8 +6,9 @@ package com.freshmanapp.blooddonor.model;
 public class User {
     String name,  location, dob, weight, mobile, email, blood_type;
     String lat, lon;
+    String profile_pic;
 
-    public User(String name,String lat,String lon,String location,String dob,String weight,String mobile,String email,String blood_type){
+    public User(String name,String lat,String lon,String location,String dob,String weight,String mobile,String email,String blood_type,String profile_pic){
         this.name = name;
         this.lat = lat;
         this.lon = lon;
@@ -17,6 +18,7 @@ public class User {
         this.mobile = mobile;
         this.email = email;
         this.blood_type = blood_type;
+        this.profile_pic = profile_pic;
     }
     public String getName(){
         return name;
@@ -44,6 +46,9 @@ public class User {
     }
     public String getBloodType(){
         return blood_type;
+    }
+    public String getProfilePic(){
+        return profile_pic;
     }
 
 }

@@ -1,21 +1,27 @@
 package com.freshmanapp.blooddonor;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.freshmanapp.blooddonor.model.User;
 import com.freshmanapp.blooddonor.service.GPSTracker;
 import com.freshmanapp.blooddonor.service.RegisterAccountTask;
+import com.freshmanapp.blooddonor.util.AccountUtils;
+import com.freshmanapp.blooddonor.util.BitMapOperations;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.widget.Spinner;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -46,8 +52,26 @@ public class Registration extends FragmentActivity {
                 .negativeAction("CANCEL");
 
 
+        /* componment init*/
 
+        AccountUtils.UserProfile profile  =  AccountUtils.getUserProfile(this);
+        TextView txt_name = ((TextView)findViewById(R.id.txt_name));
+        TextView txt_email = ((TextView)findViewById(R.id.txt_emailid));
+        ImageView profile_pic = ((ImageView)findViewById(R.id.profile_pic));
 
+        /* component setter */
+        txt_email.setText(profile.possibleEmails().get(0));
+        txt_name.setText(profile.possibleNames().get(0));
+        Bitmap bitmap=null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), profile.possiblePhoto());
+            bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(bitmap!=null)
+            profile_pic.setImageBitmap(BitMapOperations.getRoundedRectBitmap(bitmap,50));
+        final String base64Bitmap = BitMapOperations.getBase64Image(bitmap);
 
         Spinner spn_label = (Spinner) findViewById(R.id.spinner_blood_group);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.row_spn_dropdown, new String[]{"A1+", "A1-", "B+","B-", "O+", "O-","AB+", "AB-", "B+","A1+", "A1-", "B+"});
@@ -87,7 +111,7 @@ public class Registration extends FragmentActivity {
                 String lon =  gpsTracker.getLongitude()+"";
 
                 // Use AsyncTask execute Method To Prevent ANR Problem
-                User user = new User(name,lat,lon,location,dob,weight,mobile,email,blood_type);
+                User user = new User(name,lat,lon,location,dob,weight,mobile,email,blood_type,base64Bitmap);
 
                 new RegisterAccountTask(Registration.this,user).execute(getResources().getString(R.string.host));
             }

@@ -13,6 +13,7 @@ import com.freshmanapp.blooddonor.MyNavigationDrawer;
 import com.freshmanapp.blooddonor.R;
 import com.freshmanapp.blooddonor.helper.NotificationHelper;
 import com.freshmanapp.blooddonor.model.User;
+import com.freshmanapp.blooddonor.util.AccountUtils;
 import com.freshmanapp.blooddonor.util.HTMLOperations;
 
 import org.apache.http.HttpResponse;
@@ -37,6 +38,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
     private Context mContext;
     private String Error = null;
     private User user;
+
     public RegisterAccountTask(Context context,User user){
         mNotificationHelper = new NotificationHelper(context);
         Dialog = new ProgressDialog(context);
@@ -70,6 +72,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
             nameValuePairs.add(new BasicNameValuePair("mobile", user.getMobile()));
             nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
             nameValuePairs.add(new BasicNameValuePair("blood_type", "A+"));
+            nameValuePairs.add(new BasicNameValuePair("profile_pic", user.getProfilePic()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             Log.d("url", urls[0]);
@@ -83,6 +86,8 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
             Log.d("mobile", user.getMobile());
             Log.d("email", user.getEmail());
             Log.d("blood_type", user.getBloodType());
+            Log.d("profile_pic", user.getProfilePic());
+
 
             HttpResponse response = httpclient.execute(httppost);
 
@@ -109,6 +114,6 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
         Intent i = new Intent(mContext, MyNavigationDrawer.class);//MainActivity
         mContext.startActivity(i);
         ((Activity)mContext).finish();
-        new LinkAccountTask(mContext).execute(mContext.getResources().getString(R.string.host));
+       // new LinkAccountTask(mContext).execute(mContext.getResources().getString(R.string.host));
     }
 }

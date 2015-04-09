@@ -18,7 +18,7 @@
             android:id="@+id/profile_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:scaleType="fitXY"
+            android:paddingTop="4dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="Profile Picture"
             android:src="@drawable/common_signin_btn_icon_dark" />
@@ -28,7 +28,6 @@
             android:id="@+id/txt_name"
             android:textColor="@color/abc_primary_text_material_dark"
             android:text="Ramkumar"
-            android:padding="8dp"
             android:textSize="20dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_height="wrap_content" />
@@ -38,7 +37,7 @@
             android:layout_width="fill_parent"
             android:textColor="@android:color/white"
             android:text="ramkumar@gmail.com"
-            android:padding="8dp"
+            android:padding="4dp"
             android:textSize="10dp"
             android:gravity="right"
             android:layout_height="wrap_content" />
@@ -47,9 +46,9 @@
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="8dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-25dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp">
 
@@ -172,9 +171,19 @@
                     app:spn_arrowAnimDuration="@android:integer/config_shortAnimTime"
                     app:spn_arrowInterpolator="@android:anim/decelerate_interpolator" />
 
+                <com.rey.material.widget.CheckBox
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chk_terms"
+                    android:padding="8dp"
+                    android:textColor="@android:color/black"
+                    android:text="Agree terms and condition"
+                    app:rd_enable="true" />
+
                 <com.rey.material.widget.Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/btn_register"
                     android:textColor="@android:color/white"
                     android:background="@color/common_signin_btn_default_background"
