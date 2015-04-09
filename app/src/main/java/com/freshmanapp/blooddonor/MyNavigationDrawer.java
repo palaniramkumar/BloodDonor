@@ -38,7 +38,7 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         this.addAccount(account3);
 */
         // create sections
-        target = newSection("Summary", R.drawable.ic_mic_white_24dp,new TestFragment()).setSectionColor(Color.parseColor("#9c27b0"));
+        target = newSection("Summary", R.drawable.ic_mic_white_24dp,new Summary()).setSectionColor(Color.parseColor("#9c27b0"));
         this.addSection(target);
         this.addSection(newSection("Friends", R.drawable.ic_hotel_grey600_24dp, new FriendsList()).setSectionColor(Color.parseColor("#03a9f4")));
         this.addSection(newSection("Preferences",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#0689e4")));

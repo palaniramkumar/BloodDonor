@@ -28,4 +28,11 @@
         <item name="android:textColor">@android:color/holo_blue_dark</item>
         <item name="android:typeface">sans</item>
     </style>
+    <style name="SimpleDialogLight" parent="Material.App.Dialog.Simple.Light">
+        <item name="di_inAnimation">@anim/anim_scale_in</item>
+        <item name="di_outAnimation">@anim/anim_scale_out</item>
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textSize">15dp</item>
+    </style>
 </resources>
