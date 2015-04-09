@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.freshmanapp.blooddonor.model.User;
 import com.freshmanapp.blooddonor.service.GPSTracker;
+import com.freshmanapp.blooddonor.service.LinkAccountTask;
 import com.freshmanapp.blooddonor.service.RegisterAccountTask;
 import com.freshmanapp.blooddonor.util.AccountUtils;
 import com.freshmanapp.blooddonor.util.BitMapOperations;
@@ -113,7 +114,8 @@ public class Registration extends FragmentActivity {
                 // Use AsyncTask execute Method To Prevent ANR Problem
                 User user = new User(name,lat,lon,location,dob,weight,mobile,email,blood_type,base64Bitmap);
 
-                new RegisterAccountTask(Registration.this,user).execute(getResources().getString(R.string.host));
+               new RegisterAccountTask(Registration.this,user).execute(getResources().getString(R.string.host));
+
             }
         });
 

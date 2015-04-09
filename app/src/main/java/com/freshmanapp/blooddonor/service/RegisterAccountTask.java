@@ -92,7 +92,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
             HttpResponse response = httpclient.execute(httppost);
 
             str = HTMLOperations.inputStreamToString(response.getEntity().getContent()).toString();
-            str = httppost.getRequestLine().toString();
+            //str = httppost.getRequestLine().toString();
 
         } catch (Exception ex) {
             Error = ex.getMessage();
@@ -105,6 +105,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
 
 
     protected void onPostExecute(String result) {
+        Log.d("Registered ID ",result);
         SharedPreferences preferences =  mContext.getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("rid", result);
@@ -114,6 +115,6 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
         Intent i = new Intent(mContext, MyNavigationDrawer.class);//MainActivity
         mContext.startActivity(i);
         ((Activity)mContext).finish();
-       // new LinkAccountTask(mContext).execute(mContext.getResources().getString(R.string.host));
+        new LinkAccountTask(mContext).execute(mContext.getResources().getString(R.string.host));
     }
 }

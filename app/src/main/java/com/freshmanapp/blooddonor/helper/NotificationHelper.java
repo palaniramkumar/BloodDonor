@@ -30,7 +30,7 @@ public class NotificationHelper {
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         //create the notification
-        int icon = android.R.drawable.stat_sys_download;
+        int icon = android.R.drawable.stat_notify_sync;
         CharSequence tickerText = text; //Initial text that appears in the status bar
         long when = System.currentTimeMillis();
         mNotification = new Notification(icon, tickerText, when);
