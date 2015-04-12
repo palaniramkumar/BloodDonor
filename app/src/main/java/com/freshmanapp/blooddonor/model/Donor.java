@@ -1,34 +1,32 @@
 package com.freshmanapp.blooddonor.model;
 
-import java.util.ArrayList;
-
 /**
  * Created by Ramkumar on 06/04/15.
  */
 public class Donor {
-    private String title, thumbnailUrl;
-    private int year;
-    private double rating;
-    private ArrayList<String> genre;
+    private String header, thumbnailUrl;
+    private String subline1;
+    private String subline2;
+    private String caption;
 
     public Donor() {
     }
 
-    public Donor(String name, String thumbnailUrl, int year, double rating,
-                 ArrayList<String> genre) {
-        this.title = name;
+    public Donor(String header, String thumbnailUrl, String subline1,String subline2, String caption) {
+        this.header = header;
         this.thumbnailUrl = thumbnailUrl;
-        this.year = year;
-        this.rating = rating;
-        this.genre = genre;
+        this.subline1 = subline1;
+        this.subline2 = subline2;
+        this.caption = caption;
+
     }
 
-    public String getTitle() {
-        return title;
+    public String getHeader() {
+        return header;
     }
 
-    public void setTitle(String name) {
-        this.title = name;
+    public void setName(String header) {
+        this.header = header;
     }
 
     public String getThumbnailUrl() {
@@ -39,28 +37,27 @@ public class Donor {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public int getYear() {
-        return year;
+    public String getSubline1() {
+        return subline1;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setSubline1(String subline1) {
+        this.subline1 = subline1;
     }
 
-    public double getRating() {
-        return rating;
+    public void setSubline2(String subline2) {
+        this.subline2 = subline2;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public String getSubline2() {
+        return subline2;
     }
 
-    public ArrayList<String> getGenre() {
-        return genre;
+    public String getCaption() {
+        return caption;
     }
-
-    public void setGenre(ArrayList<String> genre) {
-        this.genre = genre;
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 
 }

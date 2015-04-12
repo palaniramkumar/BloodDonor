@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.freshmanapp.blooddonor.model.User;
 import com.freshmanapp.blooddonor.service.GPSTracker;
-import com.freshmanapp.blooddonor.service.LinkAccountTask;
 import com.freshmanapp.blooddonor.service.RegisterAccountTask;
 import com.freshmanapp.blooddonor.util.AccountUtils;
 import com.freshmanapp.blooddonor.util.BitMapOperations;
@@ -56,7 +55,7 @@ public class Registration extends FragmentActivity {
         /* componment init*/
 
         AccountUtils.UserProfile profile  =  AccountUtils.getUserProfile(this);
-        TextView txt_name = ((TextView)findViewById(R.id.txt_name));
+        TextView txt_name = ((TextView)findViewById(R.id.txt_header));
         TextView txt_email = ((TextView)findViewById(R.id.txt_emailid));
         ImageView profile_pic = ((ImageView)findViewById(R.id.profile_pic));
 
@@ -100,7 +99,7 @@ public class Registration extends FragmentActivity {
                // new LinkAccountTask(getApplicationContext()).execute(1);
 
                 /* get component values */
-                String name =((TextView)findViewById(R.id.txt_name)).getText().toString();
+                String name =((TextView)findViewById(R.id.txt_header)).getText().toString();
                 String location = ((com.rey.material.widget.EditText)findViewById(R.id.txt_address)).getText().toString();
                 String dob = ((com.rey.material.widget.EditText)findViewById(R.id.txt_dob)).getText().toString();
                 String weight = ((com.rey.material.widget.EditText)findViewById(R.id.txt_weight)).getText().toString();

@@ -4,8 +4,8 @@
     android:id="@+id/my_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:layout_margin="8dp">
+    android:padding="4dp"
+    android:layout_margin="4dp">
     <RelativeLayout
         android:layout_width="fill_parent"
         android:padding="8dp"
@@ -13,56 +13,59 @@
 <!-- removed android:background="@drawable/list_row_selector"-->
         <!-- Thumbnail Image -->
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/thumbnail"
+            android:id="@+id/img_usr_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
+            android:textColor="@color/genre"
             android:layout_marginRight="8dp" />
 
-        <!-- Movie Title -->
+        <!-- User Name -->
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/txt_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="Title"
+            android:layout_alignTop="@+id/img_usr_pic"
+            android:layout_toRightOf="@+id/img_usr_pic"
+            android:text="Ramkumar"
             android:textSize="@dimen/title"
+            android:textColor="@color/genre"
             android:textStyle="bold" />
 
         <!-- Rating -->
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/txt_subline1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title"
+            android:layout_below="@id/txt_header"
             android:layout_marginTop="1dip"
-            android:text="Rating"
-            android:layout_toRightOf="@+id/thumbnail"
+            android:text="A1+ Group"
+            android:textColor="@color/genre"
+            android:layout_toRightOf="@+id/img_usr_pic"
             android:textSize="@dimen/rating" />
 
-        <!-- Genre -->
+        <!-- Rating -->
         <TextView
-            android:id="@+id/genre"
+            android:id="@+id/txt_subline2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rating"
-            android:layout_marginTop="5dp"
-            android:text="genre"
-            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_below="@id/txt_subline1"
+            android:layout_marginTop="1dip"
+            android:text="A1+ Group"
             android:textColor="@color/genre"
-            android:textSize="@dimen/genre" />
+            android:layout_toRightOf="@+id/img_usr_pic"
+            android:textSize="13dp" />
 
-        <!-- Release Year -->
+        <!-- Distance -->
         <TextView
-            android:id="@+id/releaseYear"
+            android:id="@+id/txt_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/year"
-            android:text="year"
-            android:textSize="@dimen/year" />
+            android:textColor="@color/subline1"
+            android:text="18 km"
+            android:textSize="@dimen/subline1" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

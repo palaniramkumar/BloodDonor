@@ -22,22 +22,22 @@ import com.freshmanapp.blooddonor.R;
 public class CustomListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<Donor> movieItems;
+    private List<Donor> donorList;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public CustomListAdapter(Activity activity, List<Donor> movieItems) {
+    public CustomListAdapter(Activity activity, List<Donor> donorList) {
         this.activity = activity;
-        this.movieItems = movieItems;
+        this.donorList = donorList;
     }
 
     @Override
     public int getCount() {
-        return movieItems.size();
+        return donorList.size();
     }
 
     @Override
     public Object getItem(int location) {
-        return movieItems.get(location);
+        return donorList.get(location);
     }
 
     @Override
@@ -57,35 +57,27 @@ public class CustomListAdapter extends BaseAdapter {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
-        TextView title = (TextView) convertView.findViewById(R.id.title);
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView genre = (TextView) convertView.findViewById(R.id.genre);
-        TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
+                .findViewById(R.id.img_usr_pic);
+        TextView header = (TextView) convertView.findViewById(R.id.txt_header);
+        TextView subline1 = (TextView) convertView.findViewById(R.id.txt_subline1);
+        TextView subline2 = (TextView) convertView.findViewById(R.id.txt_subline2);
+        TextView caption = (TextView) convertView.findViewById(R.id.txt_caption);
 
         // getting movie data for the row
-        Donor m = movieItems.get(position);
+        Donor m = donorList.get(position);
 
         // thumbnail image
         thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
 
         // title
-        title.setText(m.getTitle());
+        header.setText(m.getHeader());
 
-        // rating
-        rating.setText("Rating: " + String.valueOf(m.getRating()));
+        subline1.setText(m.getSubline1());
 
-        // genre
-        String genreStr = "";
-        for (String str : m.getGenre()) {
-            genreStr += str + ", ";
-        }
-        genreStr = genreStr.length() > 0 ? genreStr.substring(0,
-                genreStr.length() - 2) : genreStr;
-        genre.setText(genreStr);
+        subline2.setText(m.getSubline2());
 
         // release year
-        year.setText(String.valueOf(m.getYear()));
+        caption.setText(String.valueOf(m.getCaption()));
 
         return convertView;
     }
