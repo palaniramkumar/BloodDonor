@@ -96,8 +96,14 @@ public class FriendsList  extends Fragment {
                                 donor.setName(element.getElementsByTagName("name").item(0).getTextContent());
                                 donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
                                 donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
-                                donor.setSubline1(element.getElementsByTagName("blood").item(0).getTextContent());
-                                donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
+                                //donor.setSubline1(element.getElementsByTagName("name").item(0).getTextContent());
+                                //donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
+                                donor.setSubline2("Blood Group " + element.getElementsByTagName("blood").item(0).getTextContent());
+                                String user_lat = element.getElementsByTagName("lat").item(0).getTextContent();
+                                String user_lon = element.getElementsByTagName("lon").item(0).getTextContent();
+                                donor.setGeotag(user_lat + "," + user_lon);
+                                donor.setMobile(element.getElementsByTagName("mobile").item(0).getTextContent());
+                                Log.d("Debug xml", user_lat + "," + user_lon);
                                 // adding donor to donor array
                                 donorList.add(donor);
                                 adapter.notifyDataSetChanged();
