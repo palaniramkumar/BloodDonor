@@ -1,52 +1,61 @@
 package com.freshmanapp.blooddonor;
 
 import android.app.ProgressDialog;
-import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.freshmanapp.blooddonor.adapter.CustomListAdapter;
 import com.freshmanapp.blooddonor.controller.AppController;
 import com.freshmanapp.blooddonor.model.Donor;
-import com.rey.material.app.Dialog;
-import com.rey.material.app.DialogFragment;
-import com.rey.material.app.SimpleDialog;
-import com.rey.material.widget.Button;
+import com.freshmanapp.blooddonor.service.GPSTracker;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
 
 /**
  * Created by Ramkumar on 10/04/15.
  */
-public class Summary  extends Fragment {
-    private static final String url = "http://api.androidhive.info/json/movies.json";
+public class Summary extends Fragment {
+
     private ProgressDialog pDialog;
     private List<Donor> donorList = new ArrayList<Donor>();
     private ListView listView;
     private CustomListAdapter adapter;
+    double lat, lon;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main,container,false);
-        Button btn_buzzAll = (Button)view.findViewById(R.id.btn_buzz);
-        Button btn_search = (Button)view.findViewById(R.id.btn_search);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        Button btn_buzzAll = (Button) view.findViewById(R.id.btn_buzz);
+        Button btn_search = (Button) view.findViewById(R.id.btn_search);
 
         btn_buzzAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,55 +80,80 @@ public class Summary  extends Fragment {
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
+        GPSTracker gpsTracker = new GPSTracker(getActivity());
+        lat = gpsTracker.getLatitude();
+        lon = gpsTracker.getLongitude();
+
+        final String url = getResources().getString(R.string.host);
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(getClass().getName(), response.toString());
-                        hidePDialog();
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            Document document;
+                            document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(response.getBytes()));
+                            document.getDocumentElement().normalize();
 
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+                            Log.d("root:", document.getDocumentElement().getNodeName());
+                            NodeList nodelist;
+                            nodelist = document.getElementsByTagName("person");
+                            Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
 
-                                JSONObject obj = response.getJSONObject(i);
+                            for (int temp = 0; temp < nodelist.getLength(); temp++) {
+
+                                Node node = nodelist.item(temp);
+                                Element element = (Element) node;
                                 Donor donor = new Donor();
-                                donor.setName(obj.getString("title"));
-                                donor.setThumbnailUrl(obj.getString("image"));
-                                donor.setCaption(obj.getString("rating"));
-                                donor.setSubline1(obj.getString("releaseYear"));
-
-                                // adding donor to movies array
+                                donor.setName(element.getElementsByTagName("message").item(0).getTextContent());
+                                donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
+                                donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
+                                donor.setSubline1(element.getElementsByTagName("blood").item(0).getTextContent());
+                                donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
+                                // adding donor to donor array
                                 donorList.add(donor);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                adapter.notifyDataSetChanged();
                             }
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
+                        Log.d("Response", response);
+                        hidePDialog();
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        hidePDialog();
+                    }
+                }
+        ) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(getClass().getName(), "Error: " + error.getMessage());
-                hidePDialog();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                SharedPreferences preferences = getActivity().getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
+                String id = preferences.getString("rid", "");
 
+
+                params.put("action", "GET_MSG");
+                params.put("uid", id);
+                params.put("lat", Double.toString(lat));
+                params.put("lon", Double.toString(lon));
+
+                return params;
             }
-        });
+        };
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);
-
-
+        AppController.getInstance().addToRequestQueue(postRequest);
 
 
         return view;
     }
+
     private void hidePDialog() {
         if (pDialog != null) {
             pDialog.dismiss();
@@ -127,58 +161,112 @@ public class Summary  extends Fragment {
         }
     }
 
-    void search(){
-        Dialog.Builder builder = new SimpleDialog.Builder(R.style.SimpleDialogLight){
-            @Override
-            public void onPositiveActionClicked(DialogFragment fragment) {
-                Toast.makeText(fragment.getDialog().getContext(), "You have selected " + getSelectedValue() + " group.", Toast.LENGTH_SHORT).show();
-                super.onPositiveActionClicked(fragment);
-            }
-
-            @Override
-            public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(fragment.getDialog().getContext(), "Cancelled" , Toast.LENGTH_SHORT).show();
-                super.onNegativeActionClicked(fragment);
-            }
-        };
-
-        ((SimpleDialog.Builder)builder).items(new String[]{"A+", "A-", "B-", "B+", "AB+", "AB-", "B+", "B-"}, 0)
-                .title("Choose Blood Group")
-                .positiveAction("OK")
-                .negativeAction("CANCEL");
-
-        DialogFragment fragment = DialogFragment.newInstance(builder);
-        fragment.show(getFragmentManager(), null);
+    void search() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Blood Group")
+                .items(R.array.blood_array)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        /**
+                         * If you use alwaysCallSingleChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected radio button to actually be selected.
+                         **/
+                        Fragment donor = new SearchDonor();
+                        Bundle data = new Bundle();
+                        data.putString("blood",text.toString());
+                        donor.setArguments(data);
+                        ((MaterialNavigationDrawer)getActivity()).setFragmentChild(donor,"Resluts for "+text);
+                        return true;
+                    }
+                })
+                .positiveText("Choose")
+                .show();
     }
-    void buzz(){
-        Dialog.Builder builder = new SimpleDialog.Builder(R.style.SimpleDialogLight){ //R.style.Material_TextAppearance_SimpleDialog_Light
 
-            @Override
-            protected Dialog onBuild(Context context, int styleId) {
-                Dialog dialog = super.onBuild(context, styleId);
-                dialog.layoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                return dialog;
-            }
+    void buzz() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Buzz Message")
+                .content("Comment")
+                .cancelable(true)
+                .input(R.string.input_hint, 0, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
 
-            @Override
-            public void onPositiveActionClicked(DialogFragment fragment) {
-                Toast.makeText(fragment.getDialog().getContext(), "Connected", Toast.LENGTH_SHORT).show();
-                super.onPositiveActionClicked(fragment);
-            }
+                        Toast.makeText(getActivity(), "Sending....", Toast.LENGTH_SHORT).show();
+                        final String url = getResources().getString(R.string.host);
 
-            @Override
-            public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(fragment.getDialog().getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-                super.onNegativeActionClicked(fragment);
-            }
-        };
+                        final String buzzMsg = input.toString();
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        // response
+                                        try {
+                                            Document document;
+                                            document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(response.getBytes()));
+                                            document.getDocumentElement().normalize();
 
-        builder.title("Broadcast Message")
-                .positiveAction("SEND")
-                .negativeAction("CANCEL")
-                .contentView(R.layout.dialog_buzz);
-        DialogFragment fragment = DialogFragment.newInstance(builder);
-        fragment.show(getFragmentManager(), null);
+                                            Log.d("root:", document.getDocumentElement().getNodeName());
+                                            NodeList nodelist;
+                                            nodelist = document.getElementsByTagName("person");
+                                            Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
+
+                                            for (int temp = 0; temp < nodelist.getLength(); temp++) {
+
+                                                Node node = nodelist.item(temp);
+                                                Element element = (Element) node;
+                                                Donor donor = new Donor();
+                                                donor.setName(element.getElementsByTagName("message").item(0).getTextContent());
+                                                donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
+                                                donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
+                                                donor.setSubline1(element.getElementsByTagName("blood").item(0).getTextContent());
+                                                donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
+                                                // adding donor to donor array
+                                                donorList.add(donor);
+                                                adapter.notifyDataSetChanged();
+                                            }
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        Log.d("Response", response);
+                                        hidePDialog();
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Log.d("Error.Response", error.toString());
+                                        Toast.makeText(getActivity(), "Sent", Toast.LENGTH_SHORT).show();
+                                        //hidePDialog();
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                SharedPreferences preferences = getActivity().getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
+                                String id = preferences.getString("rid", "");
+
+
+                                params.put("action", "BROADCAST");
+                                params.put("uid", id);
+                                params.put("blood", buzzMsg);
+                                params.put("lat", Double.toString(lat));
+                                params.put("lon", Double.toString(lon));
+
+                                return params;
+                            }
+                        };
+                        // Adding request to request queue
+                        AppController.getInstance().addToRequestQueue(postRequest);
+
+
+                    }
+                }).show();
+
 
     }
 }

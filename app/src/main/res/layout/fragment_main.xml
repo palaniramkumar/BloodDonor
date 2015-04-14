@@ -19,15 +19,20 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/img_banner"
                 android:layout_width="fill_parent"
-                android:layout_height="100dp"
+                android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/mat3" />
-
-            <com.rey.material.widget.Button
+                android:src="@drawable/mat2" />
+            <LinearLayout
+                android:id="@+id/wrapper"
+                android:background="#40FFFFFF"
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1.0" >
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -35,11 +40,11 @@
                 android:textColor="@android:color/holo_red_light"
                 android:background="@android:color/transparent"
                 android:text="Buzz All"
-                android:layout_below="@id/img_banner"
-                android:layout_alignParentLeft="true"
-                app:rd_enable="true" />
+                android:layout_weight=".50"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true" />
 
-            <com.rey.material.widget.Button
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -47,9 +52,10 @@
                 android:textColor="@android:color/holo_blue_dark"
                 android:background="@android:color/transparent"
                 android:text="Search"
+                android:layout_weight=".50"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/img_banner"
-                app:rd_enable="true" />
+                android:layout_alignParentBottom="true" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

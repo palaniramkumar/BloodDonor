@@ -17,16 +17,20 @@
             android:theme="@style/MyNavigationDrawerTheme"
             android:name=".MyNavigationDrawer"
             android:label="@string/title_activity_my_navigation_drawer" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity
             android:theme="@style/MyNavigationDrawerTheme"
             android:name=".Registration"
             android:label="@string/title_activity_my_navigation_drawer" >
-
+        </activity>
+        <activity
+            android:theme="@style/MyNavigationDrawerTheme"
+            android:name=".Splash"
+            android:label="@string/title_activity_my_navigation_drawer" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>

@@ -3,6 +3,7 @@ package com.freshmanapp.blooddonor.service;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
@@ -94,10 +95,11 @@ public class LinkAccountTask extends AsyncTask<String, Integer, String> { //<do 
         try {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(urls[0]);
-
+            SharedPreferences preferences = mContext.getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
+            String id = preferences.getString("rid", "");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("action", "LINK_FRIENDS"));
-            nameValuePairs.add(new BasicNameValuePair("uid", "1"));
+            nameValuePairs.add(new BasicNameValuePair("uid",id));
             nameValuePairs.add(new BasicNameValuePair("contacts", str.toString()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

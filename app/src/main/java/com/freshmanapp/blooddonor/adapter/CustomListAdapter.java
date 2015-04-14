@@ -63,7 +63,7 @@ public class CustomListAdapter extends BaseAdapter {
         TextView subline2 = (TextView) convertView.findViewById(R.id.txt_subline2);
         TextView caption = (TextView) convertView.findViewById(R.id.txt_caption);
 
-        // getting movie data for the row
+        // getting  data for the row
         Donor m = donorList.get(position);
 
         // thumbnail image

@@ -64,8 +64,8 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("action", "NEW_ACCOUNT"));
             nameValuePairs.add(new BasicNameValuePair("name", user.getName()));
-            nameValuePairs.add(new BasicNameValuePair("lat", user.getLat()));
-            nameValuePairs.add(new BasicNameValuePair("lon", user.getLon()));
+            nameValuePairs.add(new BasicNameValuePair("lat", user.getLon()));
+            nameValuePairs.add(new BasicNameValuePair("lon", user.getLat())); //we dono why the values are swapping
             nameValuePairs.add(new BasicNameValuePair("location", user.getLocation()));
             nameValuePairs.add(new BasicNameValuePair("dob", user.getDOB()));
             nameValuePairs.add(new BasicNameValuePair("weight", user.getWeight()));
@@ -105,13 +105,14 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
 
 
     protected void onPostExecute(String result) {
-        Log.d("Registered ID ",result);
+        Log.d("Registered ID ", result);
+        int rid = Integer.valueOf(result.trim());
         SharedPreferences preferences =  mContext.getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("rid", result);
+        editor.putString("rid", rid+"");
         editor.commit();
         Dialog.dismiss();
-        Toast.makeText(mContext, "Account Synced for id "+result, Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, "Account created with id "+result, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(mContext, MyNavigationDrawer.class);//MainActivity
         mContext.startActivity(i);
         ((Activity)mContext).finish();

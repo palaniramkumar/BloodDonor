@@ -1,6 +1,5 @@
 package com.freshmanapp.blooddonor;
 
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -35,24 +35,21 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * Created by Ramkumar on 07/04/15.
- * http://www.androidhive.info/2014/07/android-custom-listview-with-image-and-text-using-volley/
+ * Created by Ramkumar on 01/04/15.
  */
-public class FriendsList  extends Fragment {
-    // Log tag
-    private static final String TAG = MyNavigationDrawer.class.getSimpleName();
-
-    // Movies json url
-    private static final String url = "http://api.androidhive.info/json/movies.json";
-    private ProgressDialog pDialog;
+public class SearchDonor extends android.support.v4.app.Fragment {
     private List<Donor> donorList = new ArrayList<Donor>();
     private ListView listView;
     private CustomListAdapter adapter;
+    private ProgressDialog pDialog;
     double lat,lon;
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_friendslist,container,false);
+        View view = inflater.inflate(R.layout.fragment_donor_search,container,false);
+
+        Bundle data = this.getArguments();
+
+        final String blood = data.getString("blood");
 
         listView = (ListView) view.findViewById(R.id.list);
         adapter = new CustomListAdapter(getActivity(), donorList);
@@ -67,7 +64,13 @@ public class FriendsList  extends Fragment {
         lat = gpsTracker.getLatitude();
         lon=gpsTracker.getLongitude();
 
-        // Creating volley request obj
+
+       /* ((Button)view.findViewById(R.id.next_section)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });*/
 
         final String url = getResources().getString(R.string.host);
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -91,11 +94,21 @@ public class FriendsList  extends Fragment {
                                 Node node = nodelist.item(temp);
                                 Element element = (Element) node;
                                 Donor donor = new Donor();
+
+                                Log.d("distance:", element.getElementsByTagName("distance").item(0).getTextContent());
+                                Log.d("name:", element.getElementsByTagName("name").item(0).getTextContent());
+                                Log.d("userid:", element.getElementsByTagName("userid").item(0).getTextContent());
+                                Log.d("blood:", element.getElementsByTagName("blood").item(0).getTextContent());
+                                Log.d("distance:", element.getElementsByTagName("distance").item(0).getTextContent());
+
                                 donor.setName(element.getElementsByTagName("name").item(0).getTextContent());
                                 donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
-                                donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
+                                //donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
                                 donor.setSubline1(element.getElementsByTagName("blood").item(0).getTextContent());
-                                donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
+                                donor.setCaption(element.getElementsByTagName("distance").item(0).getTextContent());
+
+
+
                                 // adding donor to donor array
                                 donorList.add(donor);
                                 adapter.notifyDataSetChanged();
@@ -127,8 +140,9 @@ public class FriendsList  extends Fragment {
                 String id = preferences.getString("rid", "");
 
 
-                params.put("action", "MYFRIENDS");
+                params.put("action", "GET_USER");
                 params.put("uid", id);
+                params.put("blood", blood);
                 params.put("lat",Double.toString(lat));
                 params.put("lon", Double.toString(lon));
 
@@ -138,8 +152,10 @@ public class FriendsList  extends Fragment {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(postRequest);
 
+
         return view;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -152,12 +168,5 @@ public class FriendsList  extends Fragment {
             pDialog = null;
         }
     }
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        view.getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }*/
 
 }

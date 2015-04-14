@@ -31,17 +31,11 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         account = new MaterialAccount(this.getResources(),profile.possibleNames().get(0) ,profile.possibleEmails().get(0),bitmap, R.drawable.bamboo);
         this.addAccount(account);
 
-       /* MaterialAccount account2 = new MaterialAccount(this.getResources(),"Hatsune Miky","hatsune.miku@example.com",bitmap,R.drawable.mat2);
-        this.addAccount(account2);
-
-        MaterialAccount account3 = new MaterialAccount(this.getResources(),"Example","example@example.com",bitmap,R.drawable.mat3);
-        this.addAccount(account3);
-*/
         // create sections
-        target = newSection("Summary", R.drawable.ic_mic_white_24dp,new Summary()).setSectionColor(Color.parseColor("#9c27b0"));
+        target = newSection("Summary", R.drawable.ic_home,new Summary()).setSectionColor(Color.RED);
         this.addSection(target);
-        this.addSection(newSection("Friends", R.drawable.ic_hotel_grey600_24dp, new FriendsList()).setSectionColor(Color.parseColor("#03a9f4")));
-        this.addSection(newSection("Preferences",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#0689e4")));
+        this.addSection(newSection("Friends", R.drawable.ic_friends, new FriendsList()).setSectionColor(Color.RED));
+       // this.addSection(newSection("Preferences",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#0689e4")));
 
         enableToolbarElevation();
 
@@ -52,7 +46,7 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         @Override
         public void run() {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
