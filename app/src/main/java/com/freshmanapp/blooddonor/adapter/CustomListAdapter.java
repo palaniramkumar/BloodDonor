@@ -62,6 +62,8 @@ public class CustomListAdapter extends BaseAdapter {
         TextView subline1 = (TextView) convertView.findViewById(R.id.txt_subline1);
         TextView subline2 = (TextView) convertView.findViewById(R.id.txt_subline2);
         TextView caption = (TextView) convertView.findViewById(R.id.txt_caption);
+        TextView geotag = (TextView) convertView.findViewById(R.id.txt_geotag);
+        TextView mobile = (TextView) convertView.findViewById(R.id.txt_mobile);
 
         // getting  data for the row
         Donor m = donorList.get(position);
@@ -71,12 +73,10 @@ public class CustomListAdapter extends BaseAdapter {
 
         // title
         header.setText(m.getHeader());
-
         subline1.setText(m.getSubline1());
-
         subline2.setText(m.getSubline2());
-
-        // release year
+        geotag.setText(m.getGeotag());
+        mobile.setText(m.getMobile());
         caption.setText(String.valueOf(m.getCaption()));
 
         return convertView;

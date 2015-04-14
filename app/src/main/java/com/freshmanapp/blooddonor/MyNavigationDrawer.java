@@ -6,10 +6,13 @@ import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
 import it.neokree.materialnavigationdrawer.elements.MaterialSection;
+
+import com.freshmanapp.blooddonor.model.Popup;
 import com.freshmanapp.blooddonor.util.AccountUtils;
 
 
@@ -83,5 +86,9 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void popup(View v){
+        Popup p = new Popup(v);
+        p.show();
     }
 }

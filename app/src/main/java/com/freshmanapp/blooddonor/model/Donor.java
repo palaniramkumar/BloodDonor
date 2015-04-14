@@ -8,16 +8,20 @@ public class Donor {
     private String subline1;
     private String subline2;
     private String caption;
+    private String mobile;
+    private String geotag;
 
     public Donor() {
     }
 
-    public Donor(String header, String thumbnailUrl, String subline1,String subline2, String caption) {
+    public Donor(String header, String thumbnailUrl, String subline1,String subline2, String caption,String mobile,String geotag) {
         this.header = header;
         this.thumbnailUrl = thumbnailUrl;
         this.subline1 = subline1;
         this.subline2 = subline2;
         this.caption = caption;
+        this.mobile = mobile;
+        this.geotag = geotag;
 
     }
 
@@ -58,6 +62,17 @@ public class Donor {
     }
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getMobile() {return mobile; }
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+    public String getGeotag() {
+        return geotag;
+    }
+    public void setGeotag(String geotag) {
+        this.geotag = geotag;
     }
 
 }

@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -152,6 +154,7 @@ public class FriendsList  extends Fragment {
             pDialog = null;
         }
     }
+
 
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {

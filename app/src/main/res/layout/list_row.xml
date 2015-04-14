@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="4dp"
+    android:onClick="popup"
     android:layout_margin="4dp">
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -29,8 +30,7 @@
             android:layout_toRightOf="@+id/img_usr_pic"
             android:text="Ramkumar"
             android:textSize="@dimen/title"
-            android:textColor="@color/genre"
-            android:textStyle="bold" />
+            android:textColor="@color/genre" />
 
         <!-- Rating -->
         <TextView
@@ -54,7 +54,7 @@
             android:text="A1+ Group"
             android:textColor="@color/genre"
             android:layout_toRightOf="@+id/img_usr_pic"
-            android:textSize="13dp" />
+            android:textSize="@dimen/genre" />
 
         <!-- Distance -->
         <TextView
@@ -66,6 +66,17 @@
             android:textColor="@color/subline1"
             android:text="18 km"
             android:textSize="@dimen/subline1" />
+        <TextView
+            android:id="@+id/txt_geotag"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/txt_mobile"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>
