@@ -2,6 +2,7 @@ package com.freshmanapp.blooddonor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -131,10 +133,22 @@ public class Summary extends Fragment {
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(final VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.toString());
+                        new AlertDialogWrapper.Builder(getActivity())
+                                .setTitle("Sorry!")
+                                .setMessage("We are unable to connect with the server")
+                                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        error.printStackTrace();
+                                        dialog.dismiss();
+                                        getActivity().finish();
+                                    }
+                                }).show();
+
                         hidePDialog();
+
                     }
                 }
         ) {

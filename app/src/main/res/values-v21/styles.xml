@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="MyNavigationDrawerTheme" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/myPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/myPrimaryDarkColor</item>
+        <item name="colorAccent">@color/myAccentColor</item>
+        <item name="android:textColorPrimary">@color/myTextPrimaryColor</item>
+        <item name="android:navigationBarColor">@color/myPrimaryDarkColor</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/myPrimaryDarkColor</item>
+        <item name="android:windowBackground">@color/myWindowBackground</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:textColorSecondary">@color/myTextSecondaryColor</item>
+    </style>
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/holo_blue_dark</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+</resources>

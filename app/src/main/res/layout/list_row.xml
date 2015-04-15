@@ -18,7 +18,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
-            android:textColor="@color/genre"
             android:layout_marginRight="8dp" />
 
         <!-- User Name -->
@@ -30,7 +29,7 @@
             android:layout_toRightOf="@+id/img_usr_pic"
             android:text="Ramkumar"
             android:textSize="@dimen/title"
-            android:textColor="@color/genre" />
+            android:textColor="@color/header" />
 
         <!-- Rating -->
         <TextView
@@ -40,7 +39,7 @@
             android:layout_below="@id/txt_header"
             android:layout_marginTop="1dip"
             android:text="A1+ Group"
-            android:textColor="@color/genre"
+            android:textColor="@color/subline1"
             android:layout_toRightOf="@+id/img_usr_pic"
             android:textSize="@dimen/rating" />
 
@@ -52,7 +51,7 @@
             android:layout_below="@id/txt_subline1"
             android:layout_marginTop="1dip"
             android:text="A1+ Group"
-            android:textColor="@color/genre"
+            android:textColor="@color/subline2"
             android:layout_toRightOf="@+id/img_usr_pic"
             android:textSize="@dimen/genre" />
 
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/subline1"
+            android:textColor="@color/caption"
             android:text="18 km"
             android:textSize="@dimen/subline1" />
         <TextView
