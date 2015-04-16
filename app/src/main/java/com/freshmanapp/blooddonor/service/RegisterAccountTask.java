@@ -73,6 +73,7 @@ public class RegisterAccountTask extends AsyncTask<String, Void, String>{ //para
             nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
             nameValuePairs.add(new BasicNameValuePair("blood_type", "A+"));
             nameValuePairs.add(new BasicNameValuePair("profile_pic", user.getProfilePic()));
+            nameValuePairs.add(new BasicNameValuePair("token", user.getToken()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             Log.d("url", urls[0]);

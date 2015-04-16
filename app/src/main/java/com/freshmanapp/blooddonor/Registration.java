@@ -21,6 +21,7 @@ import com.freshmanapp.blooddonor.service.GPSTracker;
 import com.freshmanapp.blooddonor.service.RegisterAccountTask;
 import com.freshmanapp.blooddonor.util.AccountUtils;
 import com.freshmanapp.blooddonor.util.BitMapOperations;
+import com.freshmanapp.blooddonor.util.GCM;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 
@@ -91,9 +92,11 @@ public class Registration extends FragmentActivity {
                 String blood_type = ((MaterialEditText)findViewById(R.id.spinner_blood_group)).getText().toString();
                 String lat = gpsTracker.getLatitude()+"";
                 String lon =  gpsTracker.getLongitude()+"";
+                GCM gcm = new GCM();
+                String token = gcm.getRegistrationId(getApplicationContext());
 
                 // Use AsyncTask execute Method To Prevent ANR Problem
-                User user = new User(name,lat,lon,location,dob,weight,mobile,email,blood_type,base64Bitmap);
+                User user = new User(name,lat,lon,location,dob,weight,mobile,email,blood_type,base64Bitmap,token);
 
                 MaterialDialog diag =  new MaterialDialog.Builder(Registration.this)
                         .title("Signup")

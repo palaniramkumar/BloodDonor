@@ -87,7 +87,7 @@ public class FriendsList  extends Fragment {
                             NodeList nodelist;
                             nodelist = document.getElementsByTagName("person");
                             Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
-
+                            donorList.clear();
                             for (int temp = 0; temp < nodelist.getLength(); temp++) {
 
                                 Node node = nodelist.item(temp);

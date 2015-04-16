@@ -25,6 +25,7 @@ import com.freshmanapp.blooddonor.adapter.CustomListAdapter;
 import com.freshmanapp.blooddonor.controller.AppController;
 import com.freshmanapp.blooddonor.model.Donor;
 import com.freshmanapp.blooddonor.service.GPSTracker;
+import com.freshmanapp.blooddonor.util.GCM;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -102,17 +103,27 @@ public class Summary extends Fragment {
                             nodelist = document.getElementsByTagName("person");
                             Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
 
+                            donorList.clear();
                             for (int temp = 0; temp < nodelist.getLength(); temp++) {
 
                                 Node node = nodelist.item(temp);
                                 Element element = (Element) node;
                                 Donor donor = new Donor();
                                 donor.setName(element.getElementsByTagName("message").item(0).getTextContent());
-                                donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
+                                String uid = element.getElementsByTagName("userid").item(0).getTextContent();
+                                String blood_group = element.getElementsByTagName("blood").item(0).getTextContent();
+                                if(blood_group.trim().equals("")) {
+                                    donor.setThumbnailUrl(uid);
+                                    Log.e("debugger", uid);
+                                }
+                                else
+                                    donor.setThumbnailUrl(url + "?uid=" + uid + "&action=GET_PROFILE_PIC");
+
                                 donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
                                 donor.setSubline1(element.getElementsByTagName("name").item(0).getTextContent());
                                 //donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
-                                donor.setSubline2("Blood Group " + element.getElementsByTagName("blood").item(0).getTextContent());
+
+                                donor.setSubline2(blood_group.trim().equals("")?"":"Blood Group " + blood_group);
                                 String user_lat = element.getElementsByTagName("lat").item(0).getTextContent();
                                 String user_lon = element.getElementsByTagName("lon").item(0).getTextContent();
                                 donor.setGeotag(user_lat + "," + user_lon);
@@ -157,13 +168,15 @@ public class Summary extends Fragment {
                 Map<String, String> params = new HashMap<String, String>();
                 SharedPreferences preferences = getActivity().getSharedPreferences("REGISTER_ID", Context.MODE_PRIVATE);
                 String id = preferences.getString("rid", "");
-
+                GCM gcm =new GCM();
 
                 params.put("action", "GET_MSG");
+                params.put("token", gcm.getRegistrationId(getActivity())); //this will update the modified/refreshed token
                 params.put("uid", id);
                 params.put("lat", Double.toString(lat));
                 params.put("lon", Double.toString(lon));
 
+                Log.e("Debug GCM",gcm.getRegistrationId(getActivity()));
                 return params;
             }
         };
