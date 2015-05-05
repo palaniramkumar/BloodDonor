@@ -22,6 +22,7 @@ import com.freshmanapp.blooddonor.service.RegisterAccountTask;
 import com.freshmanapp.blooddonor.util.AccountUtils;
 import com.freshmanapp.blooddonor.util.BitMapOperations;
 import com.freshmanapp.blooddonor.util.GCM;
+import com.freshmanapp.blooddonor.util.Phone;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 
@@ -82,12 +83,15 @@ public class Registration extends FragmentActivity {
         });
         btn_register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                String tmp_no = ((MaterialEditText)findViewById(R.id.txt_phno)).getText().toString();
+                Phone ph = new Phone(getApplicationContext(), tmp_no.replaceAll("[^\\p{L}\\p{Nd}]", ""));
                 /* get component values */
                 String name =((TextView)findViewById(R.id.txt_header)).getText().toString();
                 String location = ((MaterialEditText)findViewById(R.id.txt_address)).getText().toString();
                 String dob = ((MaterialEditText)findViewById(R.id.txt_dob)).getText().toString();
                 String weight = ((MaterialEditText)findViewById(R.id.txt_weight)).getText().toString();
-                String mobile = ((MaterialEditText)findViewById(R.id.txt_phno)).getText().toString();
+                String mobile = ph.getCountryCode()+ph.getMobileNo();
                 String email = ((TextView)findViewById(R.id.txt_emailid)).getText().toString();
                 String blood_type = ((MaterialEditText)findViewById(R.id.spinner_blood_group)).getText().toString();
                 String lat = gpsTracker.getLatitude()+"";

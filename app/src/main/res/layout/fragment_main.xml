@@ -18,13 +18,35 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
+            android:background="@color/myAccentColor"
             android:layout_height="wrap_content">
-            <ImageView
+            <!--ImageView
                 android:id="@+id/img_banner"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/mat2" />
+                android:src="@drawable/mat2" /-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/txt_friends_count"
+                android:textSize="40dp"
+                android:padding="10dp"
+                android:gravity="center"
+                android:drawableLeft="@drawable/ic_friends_light"
+                android:text="0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:id="@+id/txt_nearer_count"
+                android:textSize="40dp"
+                android:gravity="center"
+                android:drawableRight="@drawable/ic_walk"
+                android:padding="10dp"
+                android:text="0"
+                android:layout_alignParentRight="true" />
             <LinearLayout
                 android:id="@+id/wrapper"
                 android:background="#40FFFFFF"
@@ -37,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/btn_buzz"
-                android:textColor="@android:color/holo_red_light"
+                android:textColor="@android:color/white"
                 android:background="@android:color/transparent"
                 android:text="Buzz All"
                 android:layout_weight=".50"
@@ -49,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/btn_search"
-                android:textColor="@android:color/holo_blue_dark"
+                android:textColor="@android:color/white"
                 android:background="@android:color/transparent"
                 android:text="Search"
                 android:layout_weight=".50"

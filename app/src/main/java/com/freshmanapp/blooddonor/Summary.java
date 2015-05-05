@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
@@ -103,6 +104,12 @@ public class Summary extends Fragment {
                             nodelist = document.getElementsByTagName("person");
                             Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
 
+                            String total_friends = document.getElementsByTagName("totalfriends").item(0).getTextContent();
+                            String total_users_around = document.getElementsByTagName("totalusers").item(0).getTextContent();
+
+                            Log.d("total_friends",total_friends);
+                            Log.d("total_users_around",total_users_around);
+
                             donorList.clear();
                             for (int temp = 0; temp < nodelist.getLength(); temp++) {
 
@@ -134,6 +141,9 @@ public class Summary extends Fragment {
                                 donorList.add(donor);
                                 adapter.notifyDataSetChanged();
                             }
+
+                            ((TextView) getActivity().findViewById(R.id.txt_friends_count)).setText(total_friends);
+                            ((TextView) getActivity().findViewById(R.id.txt_nearer_count)).setText(total_users_around);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -244,6 +254,9 @@ public class Summary extends Fragment {
                                             Log.d("root:", document.getDocumentElement().getNodeName());
                                             NodeList nodelist;
                                             nodelist = document.getElementsByTagName("person");
+
+
+
                                             Log.d("person length:", (new StringBuilder()).append(nodelist.getLength()).append("").toString());
 
                                             for (int temp = 0; temp < nodelist.getLength(); temp++) {
@@ -266,6 +279,8 @@ public class Summary extends Fragment {
                                                 donorList.add(donor);
                                                 adapter.notifyDataSetChanged();
                                             }
+
+
 
                                         } catch (Exception e) {
                                             e.printStackTrace();

@@ -3,7 +3,8 @@
     <string name="title_activity_my_navigation_drawer">Donor\'s Cloud</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="host">http://192.168.1.2/donorsclub/index.php</string>
+    <string name="host">http://freshmanapp.com/donorscloud/index.php</string>
+    <string name="host_test">http://192.168.1.2/donorsclub/index.php</string>
     <string name="action_settings">Settings</string>
     <string name="input_hint">Help! Blood Required</string>
 

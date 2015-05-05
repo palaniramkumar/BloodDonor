@@ -1,5 +1,6 @@
 package com.freshmanapp.blooddonor;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.provider.MediaStore;
@@ -39,7 +40,7 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         this.addSection(target);
         this.addSection(newSection("Friends", R.drawable.ic_friends, new FriendsList()).setSectionColor(getResources().getColor(R.color.myPrimaryColor)));
        // this.addSection(newSection("Preferences",R.drawable.ic_hotel_grey600_24dp,new TestFragment()).setSectionColor(Color.parseColor("#0689e4")));
-
+        this.addBottomSection(newSection("Settings",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
         enableToolbarElevation();
 
         thread.start();

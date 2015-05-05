@@ -48,9 +48,11 @@ public class Splash extends Activity {
             Log.i("Registered Id ",regid);
             if (regid.isEmpty()) {
                 new RegisterApp(getApplicationContext(), gcm, gcmOp.getAppVersion(getApplicationContext())).execute();
-                Toast.makeText(getApplicationContext(), "Device Registered Now", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Device Registered Now", Toast.LENGTH_SHORT).show();
+                Log.d("Device Registered Now" , regid+"");
             }else{
-                Toast.makeText(getApplicationContext(), "Device already Registered ("+regid+")", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Device already Registered ("+regid+")", Toast.LENGTH_SHORT).show();
+                Log.d("already Registered" , regid+"");
             }
 
         }

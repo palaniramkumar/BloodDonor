@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:padding="10dp"
+        android:title="Application Settings [This feature will be enabled in next update]">
+
+        <CheckBoxPreference
+            android:key="prefgpsstatus"
+            android:summary="Application can broadcast my current location."
+            android:defaultValue="true"
+            android:enabled="false"
+            android:title="GPS" />
+
+        <CheckBoxPreference
+            android:key="prefVisibility"
+            android:defaultValue="true"
+            android:enabled="false"
+            android:summary="Your profile can be made hidden/visible in global search."
+            android:title="Don't show my profile" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
