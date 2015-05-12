@@ -98,7 +98,12 @@ public class FriendsList  extends Fragment {
                                 donor.setCaption(element.getElementsByTagName("ts").item(0).getTextContent());
                                 //donor.setSubline1(element.getElementsByTagName("name").item(0).getTextContent());
                                 //donor.setSubline2(element.getElementsByTagName("distance").item(0).getTextContent());
-                                donor.setSubline2("Blood Group " + element.getElementsByTagName("blood").item(0).getTextContent());
+                                String blood_type = element.getElementsByTagName("blood").item(0).getTextContent();
+                                if(blood_type.trim().equals("")){
+                                    donor.setSubline2(element.getElementsByTagName("mobile").item(0).getTextContent());
+                                }
+                                else
+                                    donor.setSubline2("Blood Group " + blood_type);
                                 String user_lat = element.getElementsByTagName("lat").item(0).getTextContent();
                                 String user_lon = element.getElementsByTagName("lon").item(0).getTextContent();
                                 donor.setGeotag(user_lat + "," + user_lon);

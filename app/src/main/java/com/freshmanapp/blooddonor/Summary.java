@@ -84,6 +84,8 @@ public class Summary extends Fragment {
         pDialog.setMessage("Loading...");
         pDialog.show();
 
+        Log.d("GPS Status",com.freshmanapp.blooddonor.Settings.getPref("prefgpsstatus",getActivity()).toString());
+
         GPSTracker gpsTracker = new GPSTracker(getActivity());
         lat = gpsTracker.getLatitude();
         lon = gpsTracker.getLongitude();

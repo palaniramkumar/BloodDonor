@@ -164,6 +164,9 @@ public class GPSTracker extends Service implements LocationListener
         {
             latitude = location.getLatitude();
         }
+        if(com.freshmanapp.blooddonor.Settings.getPref("prefgpsstatus",mContext)){
+            latitude = 0;
+        }
 
         return latitude;
     }
@@ -176,6 +179,9 @@ public class GPSTracker extends Service implements LocationListener
         if (location != null)
         {
             longitude = location.getLongitude();
+        }
+        if(com.freshmanapp.blooddonor.Settings.getPref("prefgpsstatus",mContext)){
+            longitude = 0;
         }
 
         return longitude;
