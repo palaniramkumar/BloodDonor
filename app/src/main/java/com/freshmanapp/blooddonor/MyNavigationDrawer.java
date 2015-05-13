@@ -1,6 +1,9 @@
 package com.freshmanapp.blooddonor;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.provider.MediaStore;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
@@ -82,7 +86,8 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            showAbout();
             return true;
         }
 
@@ -91,5 +96,31 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer {
     public void popup(View v){
         Popup p = new Popup(v);
         p.show();
+    }
+    protected void showAbout() {
+        // Inflate the about message contents
+        View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+
+        // When linking text, force to always use default color. This works
+        // around a pressed color state bug.
+        String version = "1.0.0";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        }
+        catch(PackageManager.NameNotFoundException n){
+
+        }
+        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
+        TextView txt_version = (TextView) messageView.findViewById(R.id.version_name);
+        int defaultColor = textView.getTextColors().getDefaultColor();
+        textView.setTextColor(defaultColor);
+        txt_version.setText("Version "+version);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.ic_launcher);
+        builder.setTitle(R.string.app_name);
+        builder.setView(messageView);
+        builder.create();
+        builder.show();
     }
 }

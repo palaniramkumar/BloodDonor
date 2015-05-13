@@ -104,7 +104,7 @@ public class SearchDonor extends android.support.v4.app.Fragment {
                                 donor.setName(element.getElementsByTagName("name").item(0).getTextContent());
                                 donor.setThumbnailUrl(url + "?uid=" + element.getElementsByTagName("userid").item(0).getTextContent() + "&action=GET_PROFILE_PIC");
                                 donor.setCaption(element.getElementsByTagName("distance").item(0).getTextContent());
-                                donor.setSubline2("Blood Group " + element.getElementsByTagName("blood").item(0).getTextContent());
+                                donor.setSubline2( element.getElementsByTagName("blood").item(0).getTextContent());
                                 String user_lat = element.getElementsByTagName("lat").item(0).getTextContent();
                                 String user_lon = element.getElementsByTagName("lon").item(0).getTextContent();
                                 donor.setGeotag(user_lat + "," + user_lon);
