@@ -1,5 +1,7 @@
 package com.freshmanapp.blooddonor;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -53,18 +55,27 @@ public class Registration extends FragmentActivity {
         txt_dob = ((MaterialEditText) findViewById(R.id.txt_dob));
 
         /* component setter */
-        txt_email.setText(profile.possibleEmails().get(0));
-        txt_name.setText(profile.possibleNames().get(0));
+        String possibleEmail ="";
+        String possibleName ="";
+        Account[] accounts = AccountManager.get(this).getAccounts();
+        for (Account account : accounts) {
+            if(account.name.contains("@gmail.com")) {
+                possibleEmail = account.name;
+                Log.d("Profile name", possibleEmail);
+            }
+        }
+        txt_email.setText(possibleEmail);
+        txt_name.setText(possibleEmail.replace("@gmail.com",""));
         Bitmap bitmap=null;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), profile.possiblePhoto());
             bitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if(bitmap!=null)
             profile_pic.setImageBitmap(BitMapOperations.getRoundedRectBitmap(bitmap,50));
-        final String base64Bitmap = BitMapOperations.getBase64Image(bitmap);
+        final String base64Bitmap = bitmap!=null ? BitMapOperations.getBase64Image(bitmap) : null;
 
         final MaterialEditText spn_label = (MaterialEditText) findViewById(R.id.spinner_blood_group);
 
@@ -78,6 +89,7 @@ public class Registration extends FragmentActivity {
 
         txt_dob.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d("Date Click","yes");
                 showDatePickerDialog(Calendar.getInstance());
             }
         });
